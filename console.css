@@ -1,0 +1,22 @@
+code, *.code, *.console {
+font-family: monospace;
+font-size: medium;
+line-height: 100%;
+}
+code.block, blockquote.console {
+white-space: pre-wrap;
+display: block;
+border: solid black 1px;
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+margin-left: 1em;
+margin-right: 1em;
+}
+code, *.code {
+background: #eff0ff;
+color: green;
+}
+*.console {
+background: #003000;
+color: #40ff00;
+}

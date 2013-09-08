@@ -1,0 +1,100 @@
+
+.slides.layout-720p > article {
+  width: 1280px;
+  margin-left: -640px;
+
+  height: 720px;
+  margin-top: -360px;
+}
+
+.slides.layout-1080p > article {
+  width: 1920px;
+  margin-left: -960px;
+
+  height: 1080px;
+  margin-top: -540px;
+}
+
+/* Clickable/tappable areas */
+
+.slides.layout-720p #prev-slide-area {
+  margin-left: -740px;
+}
+.slides.layout-720p #next-slide-area {
+  margin-left: 590px;
+}
+
+/* Slides */
+
+.slides.layout-720p > article.far-past {
+  display: block;
+  transform: translate(-2620px);
+  -o-transform: translate(-2620px);
+  -moz-transform: translate(-2620px);
+  -webkit-transform: translate3d(-2620px, 0, 0);
+}
+.slides.layout-720p > article.past {
+  display: block;
+  transform: translate(-1310px);
+  -o-transform: translate(-1310px);
+  -moz-transform: translate(-1310px);
+  -webkit-transform: translate3d(-1310px, 0, 0);
+}
+.slides.layout-720p > article.current {
+  display: block;
+  transform: translate(0);
+  -o-transform: translate(0);
+  -moz-transform: translate(0);
+  -webkit-transform: translate3d(0, 0, 0);
+}
+.slides.layout-720p > article.next {
+  display: block;
+  transform: translate(1310px);
+  -o-transform: translate(1310px);
+  -moz-transform: translate(1310px);
+  -webkit-transform: translate3d(1310px, 0, 0);
+}
+.slides.layout-720p > article.far-next {
+  display: block;
+  transform: translate(2620px);
+  -o-transform: translate(2620px);
+  -moz-transform: translate(2620px);
+  -webkit-transform: translate3d(2620px, 0, 0);
+}
+
+.slides.layout-1080p > article.far-past {
+  display: block;
+  transform: translate(-3900px);
+  -o-transform: translate(-3900px);
+  -moz-transform: translate(-3900px);
+  -webkit-transform: translate3d(-3900px, 0, 0);
+}
+.slides.layout-1080p > article.past {
+  display: block;
+  transform: translate(-1950px);
+  -o-transform: translate(-1950px);
+  -moz-transform: translate(-1950px);
+  -webkit-transform: translate3d(-1950px, 0, 0);
+}
+.slides.layout-1080p > article.current {
+  display: block;
+  transform: translate(0);
+  -o-transform: translate(0);
+  -moz-transform: translate(0);
+  -webkit-transform: translate3d(0, 0, 0);
+}
+.slides.layout-1080p > article.next {
+  display: block;
+  transform: translate(1950px);
+  -o-transform: translate(1950px);
+  -moz-transform: translate(1950px);
+  -webkit-transform: translate3d(1950px, 0, 0);
+}
+.slides.layout-1080p > article.far-next {
+  display: block;
+  transform: translate(3900px);
+  -o-transform: translate(3900px);
+  -moz-transform: translate(3900px);
+  -webkit-transform: translate3d(3900px, 0, 0);
+}
+
