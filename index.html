@@ -27,6 +27,46 @@
     <link rel="stylesheet" type="text/css" href="layouts-ony.css"/> 
     <link rel="stylesheet" type="text/css" href="template-ony.css"/> 
     <link rel="stylesheet" type="text/css" href="template-luxoft.css"/> 
+    <script lang='jscript'>
+      var availLayouts = [
+        'layout-regular',
+        'layout-widescreen',
+        'layout-faux-widescreen',
+        'layout-720p',
+        'layout-1080p'
+        ];
+      var currentLayout = 0;
+
+      function nextLayout()
+      {
+        var presentations = document.querySelectorAll('section.slides');
+        for(var j = 0, presentation; presentation = presentations[j]; ++j)
+        {
+          // remove prev layouts
+          for(var i = 0, item; item = presentation.classList[i];)
+          {
+            if (/^layout-/.test(item)) presentation.classList.remove(item);
+            else ++i;
+          }
+          // add new one
+          currentLayout = (currentLayout + 1) % availLayouts.length;
+          presentation.classList.add(availLayouts[currentLayout]);
+        }
+      }
+
+      function handleKeyDown(event)
+      {
+        switch(event.keyCode)
+        {
+        case 76:
+          event.preventDefault();
+          nextLayout();
+
+          break;
+        }
+      }
+      document.addEventListener('keydown', handleKeyDown, false);
+    </script>
   </head>
   
   <style>
@@ -37,8 +77,9 @@
 
   <body style='display: none'>
 
-    <!-- <section class='slides layout-regular template-default'> -->
-    <section class='slides layout-1080p template-luxoft'>
+    <!-- consider: layout-720p and layout-1080p -->
+    <!-- consider: template-default -->
+    <section class='slides layout-regular template-luxoft'>
       
       <!-- Your slides (<article>s) go here. Delete or comment out the
            slides below. -->
