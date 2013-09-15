@@ -96,13 +96,13 @@
 
       <article id='plan' class='plan'>
         <ol>
-          <li/> Вступление (5 мин)
-          <li/> Файловая система (10 мин)
-          <li/> Устройства (10 мин)
-          <li/> Пользователи и права доступа (15 мин)
-          <li/> Процессы (15 мин)
-          <li/> Ядро и загрузка системы (20 мин)
-          <li/> Дистрибутивы (15 мин)
+          <li/> Вступление <!-- 5 мин -->
+          <li/> Файловая система <!-- 10 мин -->
+          <li/> Устройства <!-- 10 мин -->
+          <li/> Пользователи и права доступа <!-- 15 мин -->
+          <li/> Процессы <!-- 15 мин -->
+          <li/> Ядро и загрузка системы <!-- 20 мин -->
+          <li/> Дистрибутивы <!-- 15 мин -->
         </ol>
       </article>
 
@@ -119,9 +119,9 @@
           height="33%"
           />
         <ul>
-          <li/> Потому что когда-то с помощью маленького Pygmy я случайно
-                перетёр свою винду а через несколько дней мне удалось
-                раздобыть лишь RedHat 7.2
+          <li/> Потому что когда-то с помощью маленького дистрибутива Pygmy
+                я случайно перетёр свою винду а через несколько дней мне
+                удалось раздобыть лишь RedHat 7.2
           <li/> Мне нравится маскот в виде пингвина
         </ul>
         <span class="build">
@@ -153,7 +153,7 @@
       -->
      
       <article>
-        <h3>Организация</h3>
+        <h3>Представление</h3>
 <blockquote class="console" style="float:right;width:12em;height:37em"><span style="color:pink">zsh</span>% tree -F 
 .
 ├── bin/
@@ -198,7 +198,56 @@
         </ul>
       </article>
 
+      <article>
+        <h3>Точки монтирования</h3>
+
+<blockquote class="console build">zsh# mount
+<span>proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev,noexec,relatime)
+/dev/sda7 on / type btrfs (rw,noatime,noacl,space_cache)
+/dev/sdf1 on /boot type ext2 (ro,noatime,errors=continue)
+zsh# </span><span>ls -la /boot
+</span><span>drwxr-xr-x 9 root    root         3072 Aug  8 00:33 .
+drwxr-xr-x 1 root    root          482 Sep 14 19:43 ..
+-rw-r--r-- 1 root    root      2212692 Aug  7 11:19 System.map
+-rw-r--r-- 1 root    root       113248 Aug  7 11:19 config
+-rw-r--r-- 1 root    root      3050464 Aug  7 11:19 vmlinuz
+zsh# </span><span>umount /boot
+</span><span>zsh# </span><span>ls -la /boot
+</span><span>drwxr-xr-x 1 root root     304 Mar 22 23:56 .
+drwxr-xr-x 1 root    root          482 Sep 14 19:43 ..
+zsh# </span><span>mount -t ext2 -o rw,noatime /dev/sdf1 /boot
+</span><span>zsh# </span><span>ls -la /boot
+</span><span>drwxr-xr-x 9 root    root         3072 Aug  8 00:33 .
+drwxr-xr-x 1 root    root          482 Sep 14 19:43 ..
+-rw-r--r-- 1 root    root      2212692 Aug  7 11:19 System.map
+-rw-r--r-- 1 root    root       113248 Aug  7 11:19 config
+-rw-r--r-- 1 root    root      3050464 Aug  7 11:19 vmlinuz
+zsh# </span></blockquote>
+
+      </article>
+
+      <article>
+        <h3>Организация ФС на диске</h3>
+        <ul>
+          <li/>fat32
+          <li/>exfat
+          <li/>ntfs
+          <li/>ext2/3/4
+          <li/>reiserfs
+          <li/>btrfs
+          <li/>nilfs
+        </ul>
+      </article>
+
+
       <article class='plan'> </article>
+
+      <article>
+        <h3> Навигация </h3>
+
+      </article>
 
       <article>
         <h1>
