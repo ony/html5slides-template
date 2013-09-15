@@ -72,6 +72,10 @@
   <style>
     /* Your individual styles here, or just use inline styles if that’s
        what you want. */
+
+    li.plan-current {
+      color: red;
+    }
     
   </style>
 
@@ -88,6 +92,18 @@
       <article class='biglogo'>
         <h1>Знакомство с<br/>ОС Linux</h1>
         <p>Nikolay Orliuk <br/> Aug 2013</p>
+      </article>
+
+      <article id='plan' class='plan'>
+        <ol>
+          <li/> Вступление (5 мин)
+          <li/> Файловая система (10 мин)
+          <li/> Устройства (10 мин)
+          <li/> Пользователи и права доступа (15 мин)
+          <li/> Процессы (15 мин)
+          <li/> Ядро и загрузка системы (20 мин)
+          <li/> Дистрибутивы (15 мин)
+        </ol>
       </article>
 
       <article>
@@ -128,9 +144,13 @@
         </ul>
       </article>
 
+      <article class='plan'> </article>
+
+      <!--
       <article>
         <h1>Файловая система</h1>
       </article>
+      -->
      
       <article>
         <h3>Организация</h3>
@@ -177,6 +197,8 @@
           <li/> Типы узлов (каталог, обычный файл и др)
         </ul>
       </article>
+
+      <article class='plan'> </article>
 
       <article>
         <h1>
@@ -524,6 +546,25 @@ echo "$X"
       </article>
 
     </section>
+
+    <script lang='jscript'>
+      function makePlan()
+      {
+        var planSource = document.getElementById('plan');
+        var planSlides = document.querySelectorAll('article.plan');
+        // copy
+        for (var i = 0, slide; slide = planSlides[i]; ++i) {
+          slide.innerHTML = planSource.innerHTML;
+        }
+        // mark
+        for (var i = 0, slide; slide = planSlides[i]; ++i) {
+          var items = slide.querySelectorAll('li');
+          //items[i].innerHTML = '&gt;' + items[i].innerHTML + '&lt;';
+          items[i].classList.add('plan-current');
+        }
+      }
+      makePlan();
+    </script>
 
   </body>
 </html>
