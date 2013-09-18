@@ -35,6 +35,7 @@
         'layout-720p',
         'layout-1080p'
         ];
+      var reLayout = /^layout-/;
       var currentLayout = 0;
 
       function nextLayout()
@@ -45,7 +46,7 @@
           // remove prev layouts
           for(var i = 0, item; item = presentation.classList[i];)
           {
-            if (/^layout-/.test(item)) presentation.classList.remove(item);
+            if (reLayout.test(item)) presentation.classList.remove(item);
             else ++i;
           }
           // add new one
@@ -85,33 +86,29 @@
     <!-- consider: template-default -->
     <section class='slides layout-regular template-luxoft'>
       
-      <!-- Your slides (<article>s) go here. Delete or comment out the
-           slides below. -->
-        
-      
-      <article class='biglogo'>
-        <h1>Знакомство с<br/>ОС Linux</h1>
-        <p>Nikolay Orliuk <br/> Aug 2013</p>
+      <article class='biglogo'><h1>Знакомство с<br/>ОС Linux</h1>
+        <p>Nikolay Orliuk <br/> Sep 2013</p>
       </article>
 
+
       <article id='plan' class='plan'>
+        <h3> О чём мы говорим? </h3>
         <ol>
           <li/> Вступление <!-- 5 мин -->
+          <li/> Процессы <!-- 15 мин -->
+          <li/> Пользователи и права доступа <!-- 15 мин -->
           <li/> Файловая система <!-- 10 мин -->
           <li/> Устройства <!-- 10 мин -->
-          <li/> Пользователи и права доступа <!-- 15 мин -->
-          <li/> Процессы <!-- 15 мин -->
           <li/> Ядро и загрузка системы <!-- 20 мин -->
           <li/> Дистрибутивы <!-- 15 мин -->
         </ol>
       </article>
 
-      <article>
+      <article><h3>Почему я использую Линукс</h3>
         <!-- img
           src="http://upload.wikimedia.org/wikipedia/commons/0/0a/Tux-shaded.svg"
           style="float:right"
           -->
-        <h3>Почему я использую Линукс</h3>
         <img
           src="images/Tux-shaded.svg"
           style="float:right"
@@ -121,7 +118,7 @@
         <ul>
           <li/> Потому что когда-то с помощью маленького дистрибутива Pygmy
                 я случайно перетёр свою винду а через несколько дней мне
-                удалось раздобыть лишь RedHat 7.2
+                удалось найти лишь RedHat 7.2
           <li/> Мне нравится маскот в виде пингвина
         </ul>
         <span class="build">
@@ -129,31 +126,47 @@
             <li/> Свобода выбора (хранение информации, внешний вид, вендор)
             <li/> Потенциально полный контроль над системой
             <li/> Возможность исправить/изменить что-то самим
-            <li/> Наличие разных централизированных систем управления
+            <li/> Наличие разных централизованных систем управления
                   установленным ПО
           </ul>
         </span>
       </article>
 
-      <article>
-        <h3>Основные компоненты и их взаимодействия</h3>
+      <article><h3>Основные компоненты и их взаимодействия</h3>
         <ul class="build">
-          <li/> Файлы
           <li/> Приложения
+          <li/> Файлы
           <li/> Ядро и устройства
         </ul>
       </article>
 
-      <article class='plan'> </article>
 
-      <!--
-      <article>
-        <h1>Файловая система</h1>
+      <article class='plan'> </article>
+      <article><h3>Процессы</h3>
+        <ul class=build>
+          <li/> Запуск процессов (приложений и скриптов)
+          <li/> Понятие дочерний-родительский процесс
+          <li/> Переменные окружения
+          <li/> Потоки ввода, вывода и ошибок
+        </ul>
       </article>
-      -->
-     
-      <article>
-        <h3>Представление</h3>
+
+
+      <article class='plan'> </article>
+      <article><h3>Пользователи и группы</h3>
+        <ol>
+          <li/> С каждым аутентифицированным пользователем ассоциированна
+                основная и дополнительные группы.
+          <li/> С каждым процессом ассоциированы: пользователь, группа и маска
+                прав для создаваемых объектов на файловой системе
+          <li/> Специальный пользователь root (uid=0)
+          <li/> Смена эффективного пользователя
+        </ol>
+      </article>
+
+
+      <article class='plan'> </article>
+      <article><h3>Представление</h3>
 <blockquote class="console" style="float:right;width:12em;height:37em"><span style="color:pink">zsh</span>% tree -F 
 .
 ├── bin/
@@ -198,10 +211,11 @@
         </ul>
       </article>
 
-      <article>
-        <h3>Точки монтирования</h3>
+      <!-- <article><h3>Навигация</h3>
+      </article> -->
 
-<blockquote class="console build">zsh# mount
+      <article><h3>Точки монтирования</h3>
+          <blockquote class="console build">zsh# mount
 <span>proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
 devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
 tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev,noexec,relatime)
@@ -216,21 +230,36 @@ drwxr-xr-x 1 root    root          482 Sep 14 19:43 ..
 zsh# </span><span>umount /boot
 </span><span>zsh# </span><span>ls -la /boot
 </span><span>drwxr-xr-x 1 root root     304 Mar 22 23:56 .
-drwxr-xr-x 1 root    root          482 Sep 14 19:43 ..
-zsh# </span><span>mount -t ext2 -o rw,noatime /dev/sdf1 /boot
+drwxr-xr-x 1 root root     482 Sep 14 19:43 ..
+zsh# </span><span>mount -t ext2 -o rw,noatime,nodiratime /dev/sdf1 /boot
 </span><span>zsh# </span><span>ls -la /boot
 </span><span>drwxr-xr-x 9 root    root         3072 Aug  8 00:33 .
 drwxr-xr-x 1 root    root          482 Sep 14 19:43 ..
 -rw-r--r-- 1 root    root      2212692 Aug  7 11:19 System.map
 -rw-r--r-- 1 root    root       113248 Aug  7 11:19 config
 -rw-r--r-- 1 root    root      3050464 Aug  7 11:19 vmlinuz
+zsh# </span><span>mount | grep /boot
+</span><span>/dev/sdf1 on /boot type ext2 (rw,noatime,nodiratime,errors=continue)
 zsh# </span></blockquote>
-
+        <ul>
+          <li/> Что и куда монтируется
+          <li/> Тип файловой системы
+          <li/> Чтение-запись
+          <li/> Дополнительные опции
+        </ul>
       </article>
 
-      <article>
-        <h3>Организация ФС на диске</h3>
+      <article><h3>Ссылки</h3>
         <ul>
+          <li/>Жесткие (hard-link)
+          <p> Ссылаются на содержимое </p>
+          <li/>Символические (symbolic-link)
+          <p> Ссылаются на путь в иерархии файлов и каталогов </p>
+        </ul>
+      </article>
+
+      <article><h3>Организация ФС на диске</h3>
+        <ul class=build>
           <li/>fat32
           <li/>exfat
           <li/>ntfs
@@ -243,355 +272,105 @@ zsh# </span></blockquote>
 
 
       <article class='plan'> </article>
-
-      <article>
-        <h3> Навигация </h3>
-
-      </article>
-
-      <article>
-        <h1>
-          Title Goes Here Up
-          <br>
-          To Two Lines
-        </h1>
-        <p>
-          Sergey Brin
-          <br>
-          May 10, 2011
-        </p>
-      </article>
-      
-      <article>
-        <p>
-          This is a slide with just text. This is a slide with just text.
-          This is a slide with just text. This is a slide with just text.
-          This is a slide with just text. This is a slide with just text.
-        </p>
-        <p>
-          There is more text just underneath.
-        </p>
-      </article>
-
-      <article>
-        <h3>
-          Simple slide with header and text
-        </h3>
-        <p>
-          This is a slide with just text. This is a slide with just text.
-          This is a slide with just text. This is a slide with just text.
-          This is a slide with just text. This is a slide with just text.
-        </p>
-        <p>
-          There is more text just underneath with a <code>code sample: 5px</code>.
-        </p>
-      </article>
-
-      <article class='smaller'>
-        <h3>
-          Simple slide with header and text (small font)
-        </h3>
-        <p>
-          This is a slide with just text. This is a slide with just text.
-          This is a slide with just text. This is a slide with just text.
-          This is a slide with just text. This is a slide with just text.
-        </p>
-        <p>
-          There is more text just underneath with a <code>code sample: 5px</code>.
-        </p>
-      </article>
-
-      <article>
-        <h3>
-          Slide with bullet points and a longer title, just because we
-          can make it longer
-        </h3>
+      <article><h3>Устройства как файлы</h3>
         <ul>
-          <li>
-            Use this template to create your presentation
-          </li>
-          <li>
-            Use the provided color palette, box and arrow graphics, and
-            chart styles
-          </li>
-          <li>
-            Instructions are provided to assist you in using this
-            presentation template effectively
-          </li>
-          <li>
-            At all times strive to maintain Google's corporate look and feel
-          </li>
+          <li/> Логическая платформо-независимая обобщенная адресация устройств
+          <li/> Взаимодействие с системой стандартными средствами работы с
+                файлами
+          <li/> Использование существующего механизма управления доступом
+          <li/> Возможность пере-адресации устройств без изменения приложений
         </ul>
       </article>
 
-      <article>
-        <h3>
-          Slide with bullet points that builds
-        </h3>
-        <ul class="build">
-          <li>
-            This is an example of a list
-          </li>
-          <li>
-            The list items fade in
-          </li>
-          <li>
-            Last one!
-          </li>
-        </ul>
-
-        <div class="build">
-          <p>Any element with child nodes can build.</p>
-          <p>It doesn't have to be a list.</p>
-        </div>
-      </article>
-
-      <article>
-        <h3>
-          Slide with console
-        </h3>
-        <blockquote class="build console">
-<span># test</span>
-<span>result</span>
-<span># test2</span>
-<span>result2</span>
-        </blockquote>
-        <pre class="prettyprint lang-bsh build">
-#!/bin/bash
-<span>function foo() {
-return 1
-} </span>
-X=("a" "B")
-echo "$X"
-        </pre>
-      </article>
-
-      <article class='smaller'>
-        <h3>
-          Slide with bullet points (small font)
-        </h3>
+      <article><h3>Блочные устройства</h3>
         <ul>
-          <li>
-            Use this template to create your presentation
-          <li>
-            Use the provided color palette, box and arrow graphics, and
-            chart styles
-          <li>
-            Instructions are provided to assist you in using this
-            presentation template effectively
-          <li>
-            At all times strive to maintain Google's corporate look and feel
+          <li/> Представляют некий блок данных определенного конечного размера
+          <li/> Произвольный доступ к любому участку данных
+          <li/> Пример (sda1, vcs1)
         </ul>
       </article>
 
-      <article>
-        <h3>
-          Slide with a table
-        </h3>
-        
-        <table>
-          <tr>
-            <th>
-              Name
-            <th>
-              Occupation
-          <tr>
-            <td>
-              Luke Mahé
-            <td>
-              V.P. of Keepin’ It Real
-          <tr>
-            <td>
-              Marcin Wichary
-            <td>
-              The Michael Bay of Doodles
-        </table>
-      </article>
-      
-      <article class='smaller'>
-        <h3>
-          Slide with a table (smaller text)
-        </h3>
-        
-        <table>
-          <tr>
-            <th>
-              Name
-            <th>
-              Occupation
-          <tr>
-            <td>
-              Luke Mahé
-            <td>
-              V.P. of Keepin’ It Real
-          <tr>
-            <td>
-              Marcin Wichary
-            <td>
-              The Michael Bay of Doodles
-        </table>
-      </article>
-      
-      <article>
-        <h3>
-          Styles
-        </h3>
+      <article><h3>Символьные устройства</h3>
         <ul>
-          <li>
-            <span class='red'>class="red"</span>
-          <li>
-            <span class='blue'>class="blue"</span>
-          <li>
-            <span class='green'>class="green"</span>
-          <li>
-            <span class='yellow'>class="yellow"</span>
-          <li>
-            <span class='black'>class="black"</span>
-          <li>
-            <span class='white'>class="white"</span>
-          <li>
-            <b>bold</b> and <i>italic</i>
+          <li/> Представляют последовательность символов неопределенного размера
+          <li/> Последовательный доступ к содержимому
+          <li/> Пример (zero, null, urandom)
         </ul>
       </article>
-      
-      <article>
-        <h2>
-          Segue slide
-        </h2>
-      </article>
 
-      <article>
-        <h3>
-          Slide with an image
-        </h3>
-        <p>
-          <img style='height: 500px' src='images/example-graph.png'>
-        </p>
-        <div class='source'>
-          Source: Sergey Brin
-        </div>
-      </article>
 
-      <article>
-        <h3>
-          Slide with an image (centered)
-        </h3>
-        <p>
-          <img class='centered' style='height: 500px' src='images/example-graph.png'>
-        </p>
-        <div class='source'>
-          Source: Larry Page
-        </div>
-      </article>
-
-      <article class='fill'>
-        <h3>
-          Image filling the slide (with optional header)
-        </h3>
-        <p>
-          <img src='images/example-cat.jpg'>
-        </p>
-        <div class='source white'>
-          Source: Eric Schmidt
-        </div>
-      </article>
-
-      <article>
-        <h3>
-          This slide has some code
-        </h3>
-        <section>
-        <pre>
-&lt;script type='text/javascript'&gt;
-  // Say hello world until the user starts questioning
-  // the meaningfulness of their existence.
-  function helloWorld(world) {
-    for (var i = 42; --i &gt;= 0;) {
-      alert('Hello ' + String(world));
-    }
-  }
-&lt;/script&gt;
-&lt;style&gt;
-  p { color: pink }
-  b { color: blue }
-  u { color: 'umber' }
-&lt;/style&gt;
-</pre>
-        </section>
-      </article>
-      
-      <article class='smaller'>
-        <h3>
-          This slide has some code (small font)
-        </h3>
-        <section>
-        <pre>
-&lt;script type='text/javascript'&gt;
-  // Say hello world until the user starts questioning
-  // the meaningfulness of their existence.
-  function helloWorld(world) {
-    for (var i = 42; --i &gt;= 0;) {
-      alert('Hello ' + String(world));
-    }
-  }
-&lt;/script&gt;
-&lt;style&gt;
-  p { color: pink }
-  b { color: blue }
-  u { color: 'umber' }
-&lt;/style&gt;
-</pre>
-        </section>
-      </article>
-      
-      <article>
-        <q>
-          The best way to predict the future is to invent it.
-        </q>
-        <div class='author'>
-          Alan Kay
-        </div>
-      </article>
-      
-      <article class='smaller'>
-        <q>
-          A distributed system is one in which the failure of a computer 
-          you didn’t even know existed can render your own computer unusable.
-        </q>
-        <div class='author'>
-          Leslie Lamport
-        </div>
-      </article>
-      
-      <article class='nobackground'>
-        <h3>
-          A slide with an embed + title
-        </h3>
-        
-        <iframe src='http://www.google.com/doodle4google/history.html'></iframe>
-      </article>
-
-      <article class='nobackground'>
-        <iframe src='http://www.google.com/doodle4google/history.html'></iframe>
-      </article>
-
-      <article class='fill'>
-        <h3>
-          Full-slide embed with (optional) slide title on top
-        </h3>
-        <!-- <iframe src='http://www.google.com/doodle4google/history.html'></iframe> -->
-        <iframe src='http://en.wikipedia.org/wiki/List_of_Google_Doodles_in_2012'></iframe>
-      </article>
-      
-      <article>
-        <h3>
-          Thank you!
-        </h3>
-        
+      <article class='plan'> </article>
+      <article><h3>Ядро линукса</h3>
         <ul>
-          <li>
-            <a href='http://www.google.com'>google.com</a>
+          <li/> Платформа для приложений
+          <li/> Управление процессами
+          <li/> Драйвера предоставляющие связь между логическим устройством и
+                физическим
+          <li/> Файловые системы, сеть и прочее
         </ul>
+      </article>
+
+      <article><h3>Загружаемые модули ядра</h3>
+        <ul>
+          <li/> Небольшие кусочки ядра выделенные в отдельные файлы
+          <li/> modprobe, insmod, rmmod
+          <li/> modinfo
+        </ul>
+      </article>
+
+      <article><h3>Загрузчик</h3>
+        <ul>
+          <li/> От BIOS к загрузчику (MBR и пр)
+          <li/> Загрузчик и ядро
+          <li/> Параметры ядра
+          <li/> Что такое initramfs/initrd?
+        </ul>
+      </article>
+
+
+      <article class='plan'> </article>
+      <article><h3>Задачи дистрибутива</h3>
+        <ul>
+          <li/> Подготовка системы Линукс для конечного пользователя
+          <li/> Управление необязательными пакетами дистрибутива
+          <li/> Обобщение установленными приложениями и сервисами
+          <li/> Сопровождение стека ПО
+          <ul>
+            <li/> Обновление
+            <li/> Изменение состава (добавление новых, исключение неподдерживаемых)
+            <li/> Внедрение (корректировка для конфигурирования в составе дистрибутива)
+            <li/> Управление стабильностью
+          </ul>
+        </ul>
+      </article>
+
+      <article><h3>Менеджер пакетов</h3>
+        <ul>
+            <li/> Определение формата пакета
+            <li/> Управление пакетами
+            <li/> Доступ к репозиторию пакетов
+            <li/> Конфигурирование
+            <li/> Контроль и разрешение зависимостей
+        </ul>
+      </article>
+
+      <article><h3>Чем отличаются дистрибутивы?</h3>
+        <ul class=build>
+            <li/> Способ установки системы (полу-автоматический или ручной)
+            <li/> Способ установки пакета (бинарные файлы или описание процесса
+                  сборки)
+            <li/> Близость к апстриму (стабильные старые версии с ворохом
+                  патчей или текущий срез репозитория исходников)
+            <li/> Набор пакетов (ориентировка на игры, серверный и пр)
+            <li/> Степень безопасности
+            <li/> Целевая платформа (embedded или desktop/server)
+            <li/> Контроль и разрешение зависимостей
+        </ul>
+      </article>
+
+
+      <article>
+        <h2>Дополнительные вопросы</h2>
       </article>
 
     </section>
