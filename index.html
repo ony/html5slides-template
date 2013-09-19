@@ -109,9 +109,17 @@
     li.plan-current {
       color: red;
     }
+
+    .unshown {
+      color: #d0d0d0;
+      visibility: hidden;
+    }
+
+    .plan-current .unshown {
+      visibility: visible;
+    }
     
   </style>
-
   <body style='display: none'>
 
     <!-- consider: layout-720p and layout-1080p -->
@@ -123,16 +131,15 @@
       </article>
 
 
-      <article id='plan' class='plan'>
-        <h3> О чём мы говорим? </h3>
+      <article id='plan' class='plan'><h3> О чём мы говорим? </h3>
         <ol>
-          <li/> Вступление <!-- 5 мин -->
-          <li/> Процессы <!-- 15 мин -->
-          <li/> Пользователи и права доступа <!-- 15 мин -->
-          <li/> Файловая система <!-- 10 мин -->
-          <li/> Устройства <!-- 10 мин -->
-          <li/> Ядро и загрузка системы <!-- 20 мин -->
-          <li/> Дистрибутивы <!-- 15 мин -->
+          <li/> Вступление <span class=unshown>0:01</span>
+          <li/> Процессы <span class=unshown>0:05</span>
+          <li/> Пользователи и права доступа <span class=unshown>0:25</span>
+          <li/> Файловая система <span class=unshown>0:35 (перерыв?)</span>
+          <li/> Устройства <span class=unshown>1:10</span>
+          <li/> Ядро и загрузка системы <span class=unshown>1:25</span>
+          <li/> Дистрибутивы <span class=unshown>1:45</span>
         </ol>
       </article>
 
@@ -487,8 +494,7 @@ drwxrwxrwt 14 root    root    480 Sep 19 05:34 /tmp
       </article>
 
 
-      <article>
-        <h2>Дополнительные вопросы</h2>
+      <article><h2>Дополнительные вопросы</h2>
       </article>
 
     </section>
@@ -496,14 +502,13 @@ drwxrwxrwt 14 root    root    480 Sep 19 05:34 /tmp
     <script lang='jscript'> // fill plan slides
       function makePlan()
       {
-        var planSource = document.getElementById('plan');
+        var planSource = document.getElementById('plan').innerHTML;
         var planSlides = document.querySelectorAll('article.plan');
         // copy
         for (var i = 0, slide; slide = planSlides[i]; ++i) {
-          slide.innerHTML = planSource.innerHTML;
-        }
-        // mark
-        for (var i = 0, slide; slide = planSlides[i]; ++i) {
+          slide.innerHTML = planSource;
+
+          // mark
           var items = slide.querySelectorAll('li');
           //items[i].innerHTML = '&gt;' + items[i].innerHTML + '&lt;';
           items[i].classList.add('plan-current');
