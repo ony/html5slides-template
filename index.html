@@ -66,14 +66,26 @@
         }
       }
 
+      function skipSlide() {
+        if (curSlide < slideEls.length - 1) {
+          curSlide++;
+
+          updateSlides();
+        }
+      };
+
       function handleKeyDown(event)
       {
         switch(event.keyCode)
         {
-        case 76:
+        case 76: // "l" button
           event.preventDefault();
           nextLayout();
+          break;
 
+        case 78: // "n" button
+          event.preventDefault();
+          skipSlide();
           break;
         }
       }
