@@ -74,6 +74,10 @@
         }
       };
 
+      function autoBuildSlide() {
+        while (buildNextItem());
+      };
+
       function handleKeyDown(event)
       {
         switch(event.keyCode)
@@ -86,6 +90,11 @@
         case 78: // "n" button
           event.preventDefault();
           skipSlide();
+          break;
+
+        case 66: // "b" button
+          event.preventDefault();
+          autoBuildSlide();
           break;
         }
       }
