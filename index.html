@@ -167,10 +167,70 @@
       <article class='plan'> </article>
       <article><h3>Процессы</h3>
         <ul class=build>
-          <li/> Запуск процессов (приложений и скриптов)
           <li/> Понятие дочерний-родительский процесс
-          <li/> Переменные окружения
           <li/> Потоки ввода, вывода и ошибок
+          <li/> user id (uid), group id (gid)
+        </ul>
+      </article>
+
+      <article><h3>Переменные окружения</h3>
+<blockquote class="console"><span color=pink>zsh</span>% <span>env
+TERM=rxvt-unicode-256color
+HOME=/home/nikolay
+SHELL=/bin/zsh
+USER=nikolay
+LOGNAME=nikolay
+PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/vendor_perl:/usr/bin/core_perl
+SHLVL=1
+PWD=/home/nikolay
+OLDPWD=/home/nikolay
+JAVA_HOME=/usr/lib/jvm/java-7-openjdk/jre
+LANG=en_US.UTF-8
+HG=/usr/bin/hg
+EDITOR=vim
+VISUAL=vim
+SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
+zsh%</span></blockquote>
+        <ul>
+          <li/> Процесс установки переменных окружения
+          <li/> Использование (LANG, TZ, TERM, HOME, DISAPLAY, PATH и пр.)
+        </ul>
+      </article>
+
+      <article><h3>Запуск программ</h3>
+<blockquote class="console build">zsh% <span>ls /tmp
+</span><span>index.html.swp
+mc-nikolay
+zsh% </span><span>/ls /tmp
+</span><span>zsh: no such file or directory: /ls
+zsh% </span><span>where ls
+</span><span>/usr/bin/ls
+zsh% </span><span>/bin/ls /tmp
+</span><span>index.html.swp
+mc-nikolay
+zsh%</span></blockquote>
+        <ul class=build>
+          <li/> Переменная окружения PATH
+        </ul>
+      </article>
+
+      <article><h3>Скрипты</h3>
+        <pre class="prettyprint lang-bsh build">
+#!/bin/bash
+<span># lines that starts with slash (at least first one)
+# should be ignored by interpreter
+
+# Lets find all hidden files/folders
+# that wasn't user for more that two weeks</span>
+<span class=build>find ~ -maxdepth 1 -name '.*' \
+    -daystart -atime +14 \
+    -exec stat -c '<span>%X </span>%x %n' '{}' ';'<span> \
+    | sort -rn -k 1
+# sorted in a way so oldest is the first
+</span></span></pre>
+        <ul>
+          <li/> she-bang
+          <li/> comments
         </ul>
       </article>
 
@@ -183,14 +243,21 @@
           <li/> С каждым процессом ассоциированы: пользователь, группа и маска
                 прав для создаваемых объектов на файловой системе
           <li/> Специальный пользователь root (uid=0)
-          <li/> Смена эффективного пользователя
+        </ol>
+      </article>
+
+      <article><h3>Аутентификация пользователя</h3>
+        <ol>
+          <li/> Что хранится в /etc/passwd ( /etc/shadow ) ?
+          <li/> Процесс "входа" в систему под пользователем
         </ol>
       </article>
 
 
       <article class='plan'> </article>
       <article><h3>Представление</h3>
-<blockquote class="console" style="float:right;width:12em;height:37em"><span style="color:pink">zsh</span>% tree -F 
+<!-- <blockquote class="console" style="float:right;width:12em;height:37em"><span style="color:pink">zsh</span>% tree -F  -->
+<blockquote class="console" style="float:right;"><span style="color:pink">zsh</span>% tree -F
 .
 ├── bin/
 │   ├── bash*
@@ -282,14 +349,33 @@ zsh# </span></blockquote>
       </article>
 
       <article><h3>Организация ФС на диске</h3>
-        <ul class=build>
+        <ul>
           <li/>fat32
           <li/>exfat
           <li/>ntfs
-          <li/>ext2/3/4
-          <li/>reiserfs
-          <li/>btrfs
-          <li/>nilfs
+        </ul>
+        <span class=build>
+          <ul>
+            <li/>ext2/3/4
+            <li/>reiserfs
+            <li/>btrfs
+            <li/>nilfs
+          </ul>
+        </span>
+      </article>
+
+      <article><h3>Авторизация доступа</h3>
+<blockquote class="console" style="float:right;"><span style="color:pink">zsh</span>% ls -lad /tmp $TTY =write =su
+crw--w----  1 nikolay tty  136, 6 Sep 19  2013 /dev/pts/6
+drwxrwxrwt 14 root    root    480 Sep 19 05:34 /tmp
+-rwsr-xr-x  1 root    root  27496 Jul 31 16:15 /usr/bin/su
+-rwxr-sr-x  1 root    tty   14856 Jul 31 16:15 /usr/bin/write
+</blockquote>
+        <ul>
+          <li/> применение прав на файл
+          <li/> бит траверсинга
+          <li/> sticky бит
+          <li/> suid/sgid биты
         </ul>
       </article>
 
@@ -398,7 +484,7 @@ zsh# </span></blockquote>
 
     </section>
 
-    <script lang='jscript'>
+    <script lang='jscript'> // fill plan slides
       function makePlan()
       {
         var planSource = document.getElementById('plan');

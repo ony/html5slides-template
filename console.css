@@ -2,6 +2,7 @@ code, *.code, *.console {
 font-family: monospace;
 font-size: medium;
 line-height: 100%;
+padding: 0.5em;
 }
 code.block, blockquote.console {
 white-space: pre-wrap;
@@ -18,5 +19,5 @@ color: green;
 }
 *.console {
 background: #003000;
-color: #40ff00;
+color: #50ff10;
 }
