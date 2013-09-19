@@ -41,13 +41,24 @@
       function nextLayout()
       {
         var presentations = document.querySelectorAll('section.slides');
+        var foundLayout;
         for(var j = 0, presentation; presentation = presentations[j]; ++j)
         {
           // remove prev layouts
           for(var i = 0, item; item = presentation.classList[i];)
           {
-            if (reLayout.test(item)) presentation.classList.remove(item);
+            if (reLayout.test(item)) {
+              foundLayout = foundLayout || item;
+              presentation.classList.remove(item);
+            }
             else ++i;
+          }
+          // detect current layout
+          for(var i = 0, item; item = availLayouts[i]; ++i)
+          {
+            if (item !== foundLayout) continue;
+            currentLayout = i;
+            break;
           }
           // add new one
           currentLayout = (currentLayout + 1) % availLayouts.length;
@@ -84,7 +95,7 @@
 
     <!-- consider: layout-720p and layout-1080p -->
     <!-- consider: template-default -->
-    <section class='slides layout-regular template-luxoft'>
+    <section class='slides layout-widescreen template-luxoft'>
       
       <article class='biglogo'><h1>Знакомство с<br/>ОС Linux</h1>
         <p>Nikolay Orliuk <br/> Sep 2013</p>
