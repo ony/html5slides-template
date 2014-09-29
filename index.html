@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 
 <!--
+    This file is part of HTML5 slides template presentation.
+
+    It is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Foobar is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!--
   Google HTML5 slide template
 
   Authors: Luke Mahé (code)
@@ -8,6 +25,8 @@
            
            Dominic Mazzoni (browser compatibility)
            Charles Chen (ChromeVox support)
+
+           Nikolay Orliuk (code tweaks, Luxoft branding)
 
   URL: http://code.google.com/p/html5slides/
 -->
@@ -23,14 +42,99 @@
     <link rel="stylesheet" type="text/css" href="layouts-ony.css"/>
     <link rel="stylesheet" type="text/css" href="template-ony.css"/>
     <link rel="stylesheet" type="text/css" href="template-luxoft.css"/>
+    <script lang='jscript'>
+      var availLayouts = [
+        'layout-regular',
+        'layout-widescreen',
+        'layout-faux-widescreen',
+        'layout-720p',
+        'layout-1080p'
+        ];
+      var reLayout = /^layout-/;
+      var currentLayout = 0;
+
+      function nextLayout()
+      {
+        var presentations = document.querySelectorAll('section.slides');
+        var foundLayout;
+        for(var j = 0, presentation; presentation = presentations[j]; ++j)
+        {
+          // remove prev layouts
+          for(var i = 0, item; item = presentation.classList[i];)
+          {
+            if (reLayout.test(item)) {
+              foundLayout = foundLayout || item;
+              presentation.classList.remove(item);
+            }
+            else ++i;
+          }
+          // detect current layout
+          for(var i = 0, item; item = availLayouts[i]; ++i)
+          {
+            if (item !== foundLayout) continue;
+            currentLayout = i;
+            break;
+          }
+          // add new one
+          currentLayout = (currentLayout + 1) % availLayouts.length;
+          presentation.classList.add(availLayouts[currentLayout]);
+        }
+      }
+
+      function skipSlide() {
+        if (curSlide < slideEls.length - 1) {
+          curSlide++;
+
+          updateSlides();
+        }
+      };
+
+      function autoBuildSlide() {
+        while (buildNextItem());
+      };
+
+      function handleKeyDown(event)
+      {
+        switch(event.keyCode)
+        {
+        case 76: // "l" button
+          event.preventDefault();
+          nextLayout();
+          break;
+
+        case 78: // "n" button
+          event.preventDefault();
+          skipSlide();
+          break;
+
+        case 66: // "b" button
+          event.preventDefault();
+          autoBuildSlide();
+          break;
+        }
+      }
+      document.addEventListener('keydown', handleKeyDown, false);
+    </script>
   </head>
   
   <style>
     /* Your individual styles here, or just use inline styles if that’s
        what you want. */
+
+    li.plan-current {
+      color: red;
+    }
+
+    .unshown {
+      color: #d0d0d0;
+      visibility: hidden;
+    }
+
+    .plan-current .unshown {
+      visibility: visible;
+    }
     
   </style>
-
   <body style='display: none'>
 
     <section class='slides layout-regular template-default'>
@@ -54,6 +158,14 @@
         </p>
       </article>
       
+      <article id='plan' class='plan'><h3> Features </h3>
+        <ol>
+          <li/> Simple paragraph styles <span class=unshown>0:01</span>
+          <li/> Some animation stuff <span class=unshown>0:01</span>
+          <li/> Code and console <span class=unshown>0:01</span>
+        </ol>
+      </article>
+
       <article>
         <p>
           This is a slide with just text. This is a slide with just text.
@@ -116,6 +228,8 @@
         </ul>
       </article>
 
+      <article class='plan'> </article>
+
       <article>
         <h3>
           Slide with bullet points that builds
@@ -136,26 +250,6 @@
           <p>Any element with child nodes can build.</p>
           <p>It doesn't have to be a list.</p>
         </div>
-      </article>
-
-      <article>
-        <h3>
-          Slide with console
-        </h3>
-        <blockquote class="build console">
-<span># test</span>
-<span>result</span>
-<span># test2</span>
-<span>result2</span>
-        </blockquote>
-        <pre class="prettyprint lang-bsh build">
-#!/bin/bash
-<span>function foo() {
-return 1
-} </span>
-X=("a" "B")
-echo "$X"
-        </pre>
       </article>
 
       <article class='smaller'>
@@ -288,6 +382,8 @@ echo "$X"
         </div>
       </article>
 
+      <article class='plan'> </article>
+
       <article>
         <h3>
           This slide has some code
@@ -336,6 +432,26 @@ echo "$X"
         </section>
       </article>
       
+      <article>
+        <h3>
+          Slide with console
+        </h3>
+        <blockquote class="build console">
+<span># test</span>
+<span>result</span>
+<span># test2</span>
+<span>result2</span>
+        </blockquote>
+        <pre class="prettyprint lang-bsh build">
+#!/bin/bash
+<span>function foo() {
+return 1
+} </span>
+X=("a" "B")
+echo "$X"
+        </pre>
+      </article>
+
       <article>
         <q>
           The best way to predict the future is to invent it.
@@ -386,6 +502,24 @@ echo "$X"
       </article>
 
     </section>
+
+    <script lang='jscript'> // fill plan slides
+      function makePlan()
+      {
+        var planSource = document.getElementById('plan').innerHTML;
+        var planSlides = document.querySelectorAll('article.plan');
+        // copy
+        for (var i = 0, slide; slide = planSlides[i]; ++i) {
+          slide.innerHTML = planSource;
+
+          // mark
+          var items = slide.querySelectorAll('li');
+          //items[i].innerHTML = '&gt;' + items[i].innerHTML + '&lt;';
+          items[i].classList.add('plan-current');
+        }
+      }
+      makePlan();
+    </script>
 
   </body>
 </html>
