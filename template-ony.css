@@ -1,0 +1,14 @@
+.slides.template-ony > article:not(.nobackground):not(.biglogo) {
+  background: url(images/colorbar.png) 0 600px repeat-x,
+              url(images/googleio-logo.png) 640px 625px no-repeat;
+
+  background-size: 100%, 225px;
+
+  background-color: white;
+}
+
+.slides.template-ony article.biglogo {
+  background: white url(images/googleio-logo.png) 50% 50% no-repeat;
+
+  background-size: 600px;
+}

@@ -19,12 +19,15 @@
     <meta charset='utf-8'>
     <script
       src='http://html5slides.googlecode.com/svn/trunk/slides.js'></script>
+    <link rel="stylesheet" type="text/css" href="console.css"/>
+    <link rel="stylesheet" type="text/css" href="layouts-ony.css"/>
+    <link rel="stylesheet" type="text/css" href="template-ony.css"/>
+    <link rel="stylesheet" type="text/css" href="template-luxoft.css"/>
   </head>
   
   <style>
     /* Your individual styles here, or just use inline styles if that’s
        what you want. */
-    
     
   </style>
 
@@ -35,8 +38,6 @@
       <!-- Your slides (<article>s) go here. Delete or comment out the
            slides below. -->
         
-        
-      
       <article class='biglogo'>
       </article>
 
@@ -135,6 +136,26 @@
           <p>Any element with child nodes can build.</p>
           <p>It doesn't have to be a list.</p>
         </div>
+      </article>
+
+      <article>
+        <h3>
+          Slide with console
+        </h3>
+        <blockquote class="build console">
+<span># test</span>
+<span>result</span>
+<span># test2</span>
+<span>result2</span>
+        </blockquote>
+        <pre class="prettyprint lang-bsh build">
+#!/bin/bash
+<span>function foo() {
+return 1
+} </span>
+X=("a" "B")
+echo "$X"
+        </pre>
       </article>
 
       <article class='smaller'>
@@ -368,3 +389,5 @@
 
   </body>
 </html>
+<!-- ex:sw=2:et
+  -->

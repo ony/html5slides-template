@@ -1,0 +1,66 @@
+/*
+.slides.template-luxoft > article:not(.nobackground):not(.biglogo):before {
+    display: block;
+    position: absolute;
+    content: " ";
+    background: #f2f2f2;
+    background-size: 133px, 171px;
+    width: 90%;
+    height: 1.2em;
+    z-index: -2;
+}
+*/
+
+.slides.template-luxoft > article:not(.nobackground):not(.biglogo) {
+    background: silver url(images/luxoft-watermark.png) top right no-repeat;
+    background-size: 66px, 85px;
+    /*
+    background: url(images/colorbar.png) 0 600px repeat-x,
+                url(images/googleio-logo.png) 640px 625px no-repeat;
+
+
+    background-size: 100%, 225px;
+    */
+
+    background-color: #f6f6f6;
+    border-left-color: #1F497D;
+    border-left-style: solid;
+    border-left-width: 16pt;
+}
+
+.slides.template-luxoft article.biglogo {
+    /*
+    background: url(images/luxoft-logo.png) right top no-repeat,
+                radial-gradient(circle closest-side, #0C315B, #011E3C);
+              */
+    background: radial-gradient(circle closest-side, #0C315B, #011E3C);
+
+    border-left-color: #F36F23;
+    border-left-style: solid;
+    border-left-width: 16pt;
+}
+
+.slides.template-luxoft article.biglogo:before {
+    display: block;
+    position: absolute;
+    content: " ";
+    background: transparent url(images/luxoft-logo.png) top right no-repeat;
+    background-size: 3.04cm 3.91cm;
+    width: 90%;
+    height: 100%;
+
+}
+
+.slides.template-luxoft article.biglogo h1 {
+    font-style: bold;
+    font-size: 28pt;
+    color: white;
+    float: right;
+    height: 5em;
+    vertical-align: middle;
+    padding-left: 0.5em;
+    border-left-color: #F36F23;
+    border-left-style: solid;
+    border-left-width: 18pt;
+}
+
